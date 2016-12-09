@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Simple CSS for HTML forms.">
+    <title>Dynamically learning chat-bot: Ethelred - Medavox.com</title>
+	<style type="text/css">code{white-space: pre;}</style>
+	<link rel="stylesheet" href="style/style.css" type="text/css" />
+	<link rel="stylesheet" href="style/side-menu.css" type="text/css" />
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/base-min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/menus-min.css">
+</head>
+<body>
+    <div id="layout">
+        <a href="#menu" id="menuLink" class="menu-link">
+			<span></span>
+		</a>
+
+		<div id="menu">
+			<div class="pure-menu">
+				<a class="pure-menu-heading" href=".">Medavox.com</a>
+													<ul class="pure-menu-list">
+						<li class="pure-menu-item"><a href="/all_tags.html" class="pure-menu-link">All Tags</a></li>
+						<li class="pure-menu-item"><a href="/untagged_articles.html" class="pure-menu-link">Untagged Articles</a></li>
+						<li class="pure-menu-item"><a href="/about.html" class="pure-menu-link">About</a></li>
+					</ul>
+							</div>
+		</div>
+
+		<div id="main">
+			<div class="header">
+				
+							<h1>Dynamically learning chat-bot: Ethelred</h1>
+						
+			</div>
+			<div class="content">
+			<p>(I don't care about out how of date or mislabelled concepts are, I'm doing this FOR FUN)</p>
+<p>Having said that, some applicable areas of CS:</p>
+<ul>
+<li>NLP</li>
+<li>machine learning</li>
+<li>Complex compound data structures</li>
+</ul>
+<h2 id="major-parts-of-language">3 major parts of language:</h2>
+<ul>
+<li>entities (or nouns)</li>
+<li>connections/relationships (or verbs)</li>
+<li>properties (or adjectives)</li>
+</ul>
+<p>There are obviously other word types, but these are mostly forms of glue and special-case constructs, which may not fall under the bounds for Ethelred's dynamic learning.</p>
+<h2 id="major-types-of-sentence">Major Types of Sentence:</h2>
+<ul>
+<li>Statement
+<ul>
+<li>makes a (possibly truthful or not; see &quot;trustworthiness of converser&quot;) statement about something.</li>
+</ul></li>
+<li>Command
+<ul>
+<li>Orders to do something, ie &quot;make me a cup of tea&quot; or &quot;tell me how far I am from Azerbaijan International Airport&quot;</li>
+</ul></li>
+<li>Question
+<ul>
+<li>eg &quot;What is love?&quot;</li>
+<li>Query for information; a valid fallback response is almost always &quot;I don't know&quot;</li>
+<li>Some questions are really commands wrapped in politeness customs, ie &quot;Can you tell me where the station is?&quot;</li>
+</ul></li>
+</ul>
+<p>further things for consideration:</p>
+<ul>
+<li>if-then constructs</li>
+</ul>
+<h2 id="natural-language-parsing-the-ultimate-challenge">Natural Language Parsing (The ULTIMATE CHALLENGE)</h2>
+<p>If Ethelred doesn't understand something, he can ask clarifying questions.</p>
+<ul>
+<li>If I don't turn out to be a linguistic genius and invent a general format for allowing computers to recognise patterns and similarity (lol), I'll need a simpler, more specific system to spot repetition, and to prevent it in Ethelred.</li>
+<li>He'll need some sort of working memory of context, so if you say &quot;I like Pizza. It tastes good&quot;, then Ethelred will know what &quot;it&quot; refers to.
+<ul>
+<li>Will also need to know about time, ie whether things have happened, are happening, generally are known to happen, were true but are no longer, or will be true. Can glean useful (but vague) time placement info from grammar.</li>
+<li>This can include the repetition spotter, and also knowledge of recent topics of conversation/recent sentential subjects (ie &quot;the man&quot; or &quot;the dog&quot;)
+<ul>
+<li>Conditional truth will need its own stuff.</li>
+</ul></li>
+</ul></li>
+<li>Could potentially build a fairly complex social network of information, ie whether bob hates joe's guts, or whether jane can generally be trusted, except when talking about music.
+<ul>
+<li>Maintaining entity information entries about conversers seems pretty solid.</li>
+<li>So should trustworthiness also be topic-specific as well as converser specific? ideally, yes.</li>
+</ul></li>
+</ul>
+<h2 id="implementation-details">Implementation Details</h2>
+<ul>
+<li>Ethelred will be implemented as an XMPP client, AKA a 'person' you can chat with using Pidgin etc</li>
+<li>This means support for multiple concurrent users will be built-in (although number parallel chats will be limited by hardware; perhaps a &quot;can we talk later, I'm too busy&quot; response may be necessary)</li>
+</ul>
+<p>I don't know yet (I really should have paid more attention is Languages &amp; Comp, and AI...) but I think Ethelred's components will go like this:</p>
+<p>Lexer</p>
+<p>Relational</p>
+<h2 id="the-possibly-clever-idea">The (possibly) Clever Idea</h2>
+<ul>
+<li>Ethelred will draw conclusions about the world based on information he is given in chat. For instance, if someone says that apples are a type of fruit, Ethelred will learn that connection.</li>
+<li>Ethelred will initially be able to recognise references to previously unheard-of entities from context (&quot;Dung beetles are smelly&quot;) (and add them to the Big list of entities he knows about), asking any necessary clarifying questions (&quot;are &quot;dung beetles&quot; a thing, or are they &quot;beetles&quot; which are &quot;dung&quot;)</li>
+<li>General hardcoded knowlede a bout english grammar will faciliate this, ie &quot;the&quot; or &quot;a&quot; generally marks the next word as a noun</li>
+<li>How many relationship types will need to be manually programmed in, and how many (or even whether) Ethelred will be able to infer new verbs</li>
+<li>Inference of new words will be helped by things like whether it contains a well-known word-class formation, eg ends in -ing or -ness or -ity or -ible.</li>
+</ul>
+<h2 id="converser-trustworthiness">Converser Trustworthiness</h2>
+<p>If Ethelred can speak to a wide range of people, then they could feed him any old misinformation, eg convince him that &quot;squirgleblops&quot; are a respectable form of footwear.</p>
+<p>As such, there will need to be a trustworthiness scale for each converser. I envisage valid levels could be:-</p>
+<ol start="0" style="list-style-type: decimal">
+<li>Converser should not or cannot be spoken with (gibberish, another language, or some heinous crime against Ethelred)</li>
+<li>Stranger: Any new thing the converser says is not be trusted, ie &quot;I don't care if you say 'the sky' is blue, I've never heard of it.&quot;
+<ul>
+<li>Can be thought of as 'Read-only Conversation'; the converser cannot influence Ethelred whatsoever.</li>
+<li>Existing known information is of course unchanged. Whether this converser corroborates is of no consequence.</li>
+</ul></li>
+<li>Acquaintance: New information the converser gives needs to be checked for veracity, but is worth checking.</li>
+<li>Teacher: New information is taken to be true without further checking.
+<ul>
+<li>What if a Teacher makes a statement that conflicts with existing knowledge? clarify, overwrite, ignore?</li>
+</ul></li>
+</ol>
+<p>Higher trustworthiness users would take precedence when Ethelred is busy.</p>
+<h3 id="things-that-could-raise-trustworthiness-of-a-speaker-">Things that could RAISE trustworthiness of a speaker:-</h3>
+<ul>
+<li>Making statements that Ethelred already knows to be true
+<ul>
+<li>Or which turn out to be true after checking with another, more trusted converser.
+<ul>
+<li>If no other conversers are available, perhaps are large number of less trusted converser</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="things-which-could-lower-the-trustworthiness-of-a-speaker-">Things which could LOWER the trustworthiness of a speaker:-</h3>
+<ul>
+<li>Making statements Ethelred knows to be false, eg &quot;I have 21 arms&quot;</li>
+</ul>
+<h2 id="other-stuff">Other Stuff</h2>
+<p>Eventually, Ethelred will have his own &quot;internet browser&quot;, some kind of HTTP client which presents web page text to the language engine in a sane manner, ignoring images. JavaScript support is unknown yet. Probably best to save it for later.</p>
+<p>Tagged as: <a href="tags/project.html">project</a> <a href="tags/software.html">software</a> <a href="tags/ai.html">ai</a> <a href="tags/ideas.html">ideas</a></p>
+			</div><!-- content-->
+		</div><!-- main   -->
+			</div><!-- layout -->
+</body>
+</html>

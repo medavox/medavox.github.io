@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Simple CSS for HTML forms.">
+    <title>(Debian?) Linux One-Liners - Medavox.com</title>
+	<style type="text/css">code{white-space: pre;}</style>
+	<link rel="stylesheet" href="style/style.css" type="text/css" />
+	<link rel="stylesheet" href="style/side-menu.css" type="text/css" />
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/base-min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/menus-min.css">
+</head>
+<body>
+    <div id="layout">
+        <a href="#menu" id="menuLink" class="menu-link">
+			<span></span>
+		</a>
+
+		<div id="menu">
+			<div class="pure-menu">
+				<a class="pure-menu-heading" href=".">Medavox.com</a>
+													<ul class="pure-menu-list">
+						<li class="pure-menu-item"><a href="/all_tags.html" class="pure-menu-link">All Tags</a></li>
+						<li class="pure-menu-item"><a href="/untagged_articles.html" class="pure-menu-link">Untagged Articles</a></li>
+						<li class="pure-menu-item"><a href="/about.html" class="pure-menu-link">About</a></li>
+					</ul>
+							</div>
+		</div>
+
+		<div id="main">
+			<div class="header">
+				
+							<h1>(Debian?) Linux One-Liners</h1>
+						
+			</div>
+			<div class="content">
+			<p>These are various bash commands and tricks I've accumulated, which help in the day-to-day usage of my linux laptop.</p>
+<h2 id="sort-files-and-folders-in-the-current-directory-by-size-human-readably">Sort files and folders in the current directory by size, human readably</h2>
+<pre><code> du -ahd 1 | sort h </code></pre>
+<p>This will print out the largest file and folders in the current directory, with the largest at the bottom (closest to the prompt) NOTE: If this doesn't work, then it's because the <code>-d</code> option was only introduced to <code>du</code> after debian 6. Try</p>
+<pre><code>--max-depth=1</code></pre>
+<p>instead.</p>
+<h2 id="search-apt-currently-installed-packages">Search APT Currently Installed packages</h2>
+<pre><code>dpkg --get-selections | grep -i &lt;searchterm&gt;</code></pre>
+<p>This will search (case-insensitive) your locally installed apt packages for any containing the string <searchterm>.</p>
+<h2 id="get-more-info-on-a-package">Get more info on a package</h2>
+<pre><code>apt-cache show &lt;exact package name&gt;</code></pre>
+<p>Gives you a bunch more info than just the name (hopefully including a short description) of the named package.</p>
+<h2 id="search-all-available-packages">Search all available packages</h2>
+<pre><code>apt-cache search &lt;searchterm&gt;</code></pre>
+<p>Beware, this can give a lot of results.</p>
+<h2 id="play-videos-fullscreen-on-commandline-using-mplayer">Play videos fullscreen on commandline using mplayer</h2>
+<pre><code>screenwidth=&lt;your screen width&gt;; mplayer -nosound -vo fbdev -xy $screenwidth -zoom &lt;video file&gt;</code></pre>
+<p>Doesn't bother with sound, because I haven't worked out how to just run a sound server without an X server yet, and there's no need to waste system resources playing something you can't hear.</p>
+<h2 id="losslessly-extract-audio-from-an-mp4-using-ffmpeg">Losslessly Extract Audio from an MP4 using FFMPEG</h2>
+<pre><code>ffmpeg -i &lt;infile&gt; -vn -acodec copy &lt;outfile&gt;.mp4</code></pre>
+<p>Extracts the audio from an MP4 videon without transcoding of any kind. Avoids any loss of audio quality.</p>
+<p>This command will probably need to be revisited and changed, following ffmpeg's upheaval, name change, etc. But for now it still works, even with deprecated warnings.</p>
+<p>UPDATE:</p>
+<p>here's the new version of the command, for us with libAV (the fork of ffmpeg adopted by all distros I use):</p>
+<pre><code>avconv -i &lt;infile&gt; -vn -acodec copy &lt;outfile&gt;.mp4</code></pre>
+<p>Yes, it's exactly the same. Panic over.</p>
+<p>Tagged as: <a href="tags/linux.html">linux</a> <a href="tags/apt.html">apt</a> <a href="tags/debian.html">debian</a> <a href="tags/ubuntu.html">ubuntu</a> <a href="tags/bash.html">bash</a> <a href="tags/commandline.html">commandline</a> <a href="tags/server.html">server</a></p>
+			</div><!-- content-->
+		</div><!-- main   -->
+			</div><!-- layout -->
+</body>
+</html>

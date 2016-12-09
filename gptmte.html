@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Simple CSS for HTML forms.">
+    <title>General-Purpose TextMode Text Editor - Medavox.com</title>
+	<style type="text/css">code{white-space: pre;}</style>
+	<link rel="stylesheet" href="style/style.css" type="text/css" />
+	<link rel="stylesheet" href="style/side-menu.css" type="text/css" />
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/base-min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/menus-min.css">
+</head>
+<body>
+    <div id="layout">
+        <a href="#menu" id="menuLink" class="menu-link">
+			<span></span>
+		</a>
+
+		<div id="menu">
+			<div class="pure-menu">
+				<a class="pure-menu-heading" href=".">Medavox.com</a>
+													<ul class="pure-menu-list">
+						<li class="pure-menu-item"><a href="/all_tags.html" class="pure-menu-link">All Tags</a></li>
+						<li class="pure-menu-item"><a href="/untagged_articles.html" class="pure-menu-link">Untagged Articles</a></li>
+						<li class="pure-menu-item"><a href="/about.html" class="pure-menu-link">About</a></li>
+					</ul>
+							</div>
+		</div>
+
+		<div id="main">
+			<div class="header">
+				
+							<h1>General-Purpose TextMode Text Editor</h1>
+						
+			</div>
+			<div class="content">
+			<p>Here's an idea which will hopefully become more than that as time passes.</p>
+<h2 id="background">Background</h2>
+<p>There is currently no command line text editor that follows the design principle <a href="http://en.wikipedia.org/wiki/Principle_of_least_astonishment">of least surprise</a>:</p>
+<p>I can't fire up nano, or Vim (and i shudder to even think of installing emacs), and use ctrl+left or right to move between words; I can't hold shift and press End to select to the end of the line. If I want to do something that 'advanced', I'd have to learn Vim.</p>
+<p>No thanks. I won't learn a completely different muscle-memory language for editing text files in one particular context (purely for political or historical reasons), when all these keyboard shortcuts work perfectly in every other editor I use (Eclipse, netbeans, notepad++, geany, gedit....).</p>
+<p>The ctrl+arrow stuff is so standard, it's implemented in Android text-input boxes.</p>
+<p>If we can have this functionality in our mobile phones, why not in our ssh sessions?</p>
+<p>Nothing about text-mode text editing prevents this, so why hasn't it been invented yet?</p>
+<p>So I'll invent it.</p>
+<p>In all likelihood, this'll be a fork of nano.</p>
+<h2 id="libraries">Libraries</h2>
+<ul>
+<li>I'll most likely be using <a href="http://www.leonerd.org.uk/code/libtermkey/">this keyboard input handling library</a>, which claims to be able to capture ctrl-arrow keypresses.</li>
+<li><a href="https://www.gnu.org/software/ncurses/ncurses.html">Ncurses</a> will still be able to provide text-based layout and things.</li>
+</ul>
+<h2 id="design-document">Design Document</h2>
+<ul>
+<li>Written in C, primarily for POSIX/UNIX systems (read:linux)</li>
+<li>Portable!</li>
+</ul>
+<p>Let's start listing features this text editor will have.</p>
+<h3 id="display">Display</h3>
+<ul>
+<li>Line numbers permanently along the left-hand side</li>
+<li>Number of occurrences displayed when searching</li>
+<li>Column number, word count displayed at bottom. Current line number highlighted (inverted) in line numbers.</li>
+</ul>
+<h3 id="behaviour">Behaviour</h3>
+<ul>
+<li>WILL NOT be tabbed, or open &gt;1 file simultaneously; dammit Jim, it's a text editor, not an IDE!</li>
+<li>Will have syntax highlighting
+<ul>
+<li>Using an existing language's syntax files (nano's or vim's will do), to reduce user learning overhead (and provide instant language support)</li>
+</ul></li>
+<li>WILL highlight selected text with inverted colouring</li>
+<li>WILL NOT support Vim keystroke emulation in any way; anyone who has taken the time and effort to learn vim probably still knows how to use the standard text-editing interface that everyone else has used for 15+ years.
+<ul>
+<li>Also they'll always just be able to use Vim anyway, as Vim runs anywhere this will.</li>
+</ul></li>
+<li>Corresponding bracket highlighting</li>
+<li>Smooth scrolling</li>
+<li>WILL NOT be able to start a new file inside the editor;
+<ul>
+<li>Do that in the shell, then open that file for editing.</li>
+<li>Or start the editor with a non-existent filename as an argument.</li>
+</ul></li>
+<li>typing any valid keys on the keyboar without a modifier key will insert/overwrite those characters at the current point</li>
+<li>Will respect the decades-old insert/overwrite modes, switched with the Insert key</li>
+<li>UNDO AND REDO! (how hard can it be to write a linked-list stack of textfile state, and add to it every time the user modifies the file?)</li>
+</ul>
+<h3 id="possiblefuture-extras">Possible/Future Extras</h3>
+<ul>
+<li>gpm-based mouse support???</li>
+<li>File-menu style menu simulation, reachable by pressing alt or clicking (with mouse support) the top of the screen</li>
+</ul>
+<h3 id="keyboard-shortcuts">Keyboard shortcuts</h3>
+<p>The idea is, you (or your fingers) should be able to guess all these. These are only a reminder so I know what I'll have to implement.</p>
+<h4 id="navigating-text">Navigating Text</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Key</th>
+<th align="left">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">left</td>
+<td align="left">move left one char</td>
+</tr>
+<tr class="even">
+<td align="left">right</td>
+<td align="left">move right one char</td>
+</tr>
+<tr class="odd">
+<td align="left">up</td>
+<td align="left">move up one line</td>
+</tr>
+<tr class="even">
+<td align="left">down</td>
+<td align="left">move down one line</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctrl+left</td>
+<td align="left">move left one word</td>
+</tr>
+<tr class="even">
+<td align="left">Ctrl+right</td>
+<td align="left">move right one word</td>
+</tr>
+<tr class="odd">
+<td align="left">Home</td>
+<td align="left">move to (non-whitespace) start of line</td>
+</tr>
+<tr class="even">
+<td align="left">End</td>
+<td align="left">move to (non-whitespace) end of line</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctrl+Home</td>
+<td align="left">move to start of file</td>
+</tr>
+<tr class="even">
+<td align="left">Ctrl+End</td>
+<td align="left">move to end of file</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctrl+F</td>
+<td align="left">find a string in the file</td>
+</tr>
+<tr class="even">
+<td align="left">Ctrl+H</td>
+<td align="left">replace a string in the file (opens a small ncurses dialog)</td>
+</tr>
+<tr class="odd">
+<td align="left">F3</td>
+<td align="left">move to next occurrence</td>
+</tr>
+<tr class="even">
+<td align="left">shift+F3, shift+n</td>
+<td align="left">move to previous occurrence</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctrl+X</td>
+<td align="left">Cuts any selected text</td>
+</tr>
+<tr class="even">
+<td align="left">Ctrl+C</td>
+<td align="left">Copies any selected text</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctrl+V</td>
+<td align="left">Pastes clipboard at caret marker</td>
+</tr>
+<tr class="even">
+<td align="left">Ctrl+D</td>
+<td align="left">Duplicates the current line (duplicated line is below)</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctrl+K</td>
+<td align="left">Deletes (Kills) the current line (file moves up to fill gap)</td>
+</tr>
+<tr class="even">
+<td align="left">Ctrl+L</td>
+<td align="left">Goes to a line (small dialog popup)</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctrl+T</td>
+<td align="left">Swaps (Transposes) the current line with the line above</td>
+</tr>
+</tbody>
+</table>
+<h4 id="file-system">File System</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Key</th>
+<th align="left">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Ctrl+S</td>
+<td align="left">Save a file (single-line filename prompt)</td>
+</tr>
+<tr class="even">
+<td align="left">Ctrl+O</td>
+<td align="left">Open a file (single-line filename prompt)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="misc">Misc</h4>
+<table style="width:49%;">
+<colgroup>
+<col width="18%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Key</th>
+<th align="left">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Insert</td>
+<td align="left">Toggle between insert and overwrite modes (have this displayed in the same pseudo-status bar as column number)</td>
+</tr>
+<tr class="even">
+<td align="left">Ctrl+X, Alt+X, Ctrl+W</td>
+<td align="left">Closes the editor. Prompts if you want to save any unsaved changes first (if there are any).</td>
+</tr>
+</tbody>
+</table>
+<p>Here's some extended <a href="http://chxo.com/be2/nano_find_replace.html">nano functionality</a> I could co-opt into making this sane fork of nano.</p>
+<h2 id="links">Links</h2>
+<p>From my browser, originally.</p>
+<h3 id="similar-stuff">Similar Stuff</h3>
+<ul>
+<li><a href="http://joe-editor.sourceforge.net/">JOE's own editor - another textmode text editor</a></li>
+<li><a href="https://github.com/tihirvon/dex">dex - a dextrous text editor</a></li>
+<li><a href="linux_text_editors_comparison_on_yolinux.html">http://www.yolinux.com/TUTORIALS/LinuxTextEditors.html</a></li>
+</ul>
+<h3 id="useful-stuff">Useful Stuff</h3>
+<ul>
+<li><a href="https://github.com/serialhex/nano-highlight">a spiffy collection of nano syntax highlighting files</a></li>
+<li><a href="https://bbs.archlinux.org/viewtopic.php?id=133595">config file syntax highlighting for nano</a></li>
+</ul>
+<p>Tagged as: <a href="tags/software.html">software</a> <a href="tags/ideas.html">ideas</a></p>
+			</div><!-- content-->
+		</div><!-- main   -->
+			</div><!-- layout -->
+</body>
+</html>
