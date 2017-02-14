@@ -39,9 +39,8 @@
 			<p>These are various bash commands and tricks I've accumulated, which help in the day-to-day usage of my linux laptop.</p>
 <h2 id="sort-files-and-folders-in-the-current-directory-by-size-human-readably">Sort files and folders in the current directory by size, human readably</h2>
 <pre><code> du -ahd 1 | sort h </code></pre>
-<p>This will print out the largest file and folders in the current directory, with the largest at the bottom (closest to the prompt) NOTE: If this doesn't work, then it's because the <code>-d</code> option was only introduced to <code>du</code> after debian 6. Try</p>
-<pre><code>--max-depth=1</code></pre>
-<p>instead.</p>
+<p>This will print out the largest file and folders in the current directory, with the largest at the bottom (closest to the prompt)</p>
+<p>NOTE: If this doesn't work, then it's because the <code>-d</code> option was only introduced to <code>du</code> after debian 6. Try <code>--max-depth=1</code> instead.</p>
 <h2 id="search-apt-currently-installed-packages">Search APT Currently Installed packages</h2>
 <pre><code>dpkg --get-selections | grep -i &lt;searchterm&gt;</code></pre>
 <p>This will search (case-insensitive) your locally installed apt packages for any containing the string <searchterm>.</p>
@@ -62,6 +61,11 @@
 <p>here's the new version of the command, for us with libAV (the fork of ffmpeg adopted by all distros I use):</p>
 <pre><code>avconv -i &lt;infile&gt; -vn -acodec copy &lt;outfile&gt;.mp4</code></pre>
 <p>Yes, it's exactly the same. Panic over.</p>
+<h2 id="recursively-find-replace-a-regex-pattern-with-a-new-one-in-files-matching-a-criteria">Recursively find-replace a regex pattern with a new one, in files matching a criteria</h2>
+<pre><code>find ./ -iname &lt;filname-pattern&gt; -exec sed -i &#39;s/oldtext/newtext/&#39; {} \;</code></pre>
+<h2 id="recursively-search-in-text-files-for-a-pattern">Recursively search in text files for a pattern</h2>
+<pre><code>grep -Irn &lt;text&gt;</code></pre>
+<p>Surround the searched-for text with quotes if it contains a space.</p>
 <p>Tagged as: <a href="tags/linux.html">linux</a> <a href="tags/apt.html">apt</a> <a href="tags/debian.html">debian</a> <a href="tags/ubuntu.html">ubuntu</a> <a href="tags/bash.html">bash</a> <a href="tags/commandline.html">commandline</a> <a href="tags/server.html">server</a></p>
 			</div><!-- content-->
 		</div><!-- main   -->
